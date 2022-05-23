@@ -4,19 +4,27 @@ import LinearGradient from 'react-native-linear-gradient';
 import DateButton from './DateButton';
 import AddButton from './AddButton';
 import DatePickerComp from './DatePickerComp';
+import { FormatTime } from '../ExtensionMethods'
 
 
 const NewToDoTask = (props) => {
 
-    const [date, setDate] = useState(new Date())
     const [showDateTime, setShowDateTime] = useState(false);
+    const [getNewTaskTime, setNewTaskTime] = useState(new Date());
+    const [getNewTaskDescription, setNewTaskDescription] = useState("");
 
     const closeModal = () => {
         props.setModal(false)
     }
 
-    return (props.trigger) ? (
-        <Modal transparent={true} >
+
+    const SendTaskInfo = () => {
+        props.NewTask({dataId: 12, time: getNewTaskTime, description: getNewTaskDescription})
+        closeModal();
+    }
+
+
+    return (
             <Pressable onPress={closeModal} style={NewStyles.container}>
                 <LinearGradient
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
@@ -27,7 +35,7 @@ const NewToDoTask = (props) => {
                         
                         <Text style={NewStyles.Texts}>Time:</Text>
                         <View style={NewStyles.TimeSection}>
-                            <Text style={NewStyles.Texts}>14:30</Text>
+                            <Text style={NewStyles.Texts}>{FormatTime(getNewTaskTime)}</Text>
                             <DateButton DateButtonClicked={() => setShowDateTime(true)}/>
                         </View>
 
@@ -36,16 +44,17 @@ const NewToDoTask = (props) => {
                             <TextInput style={NewStyles.DescInput}
                                 placeholder={"Task Description..."}
                                 placeholderTextColor='white'
-                                multiline={true}></TextInput>
+                                multiline={true}
+                                onChangeText={text => setNewTaskDescription(text)}></TextInput>
                         </View>
-                        <AddButton bottomMargin={5} AddClick={()=> console.log('add clicked')}/>
+                        <AddButton bottomMargin={5} AddClick={()=> SendTaskInfo(getNewTaskTime)}/>
                     </View>
-                    <DatePickerComp trigger={showDateTime}/>
                 </LinearGradient>
+                <Modal visible={showDateTime} transparent={true}>
+                    <DatePickerComp showDateTimeModal={setShowDateTime} TaskDate={setNewTaskTime}/>
+                </Modal>
             </Pressable>
-            
-        </Modal >
-    ) : null;
+    );
 }
 
 const NewStyles = StyleSheet.create({
@@ -53,7 +62,7 @@ const NewStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0,0,0, 0.5)',
     },
 
     Outline: {

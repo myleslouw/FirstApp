@@ -9,7 +9,7 @@ const DeleteButton = (props) => {
             <LinearGradient
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 colors={['#11998e', '#38ef7d']}
-                style={DeleteStyle.DeleteButton}>
+                style={[DeleteStyle.DeleteButton, {paddingVertical: props.paddingVert}]}>
                 <Text style={DeleteStyle.Text}>X</Text>
             </LinearGradient>
         </Pressable>

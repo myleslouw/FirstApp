@@ -17,11 +17,11 @@ const TodoTask = (props) => {
   }
 
   const RightSwipe = () => {
-    return <DeleteButton DeleteFunction={props.DeleteFunction} style={{paddingVertical: 50}}></DeleteButton>
+    return <DeleteButton DeleteFunction={props.DeleteFunction} paddingVert={expanded ? 15: 50}></DeleteButton>
   }
 
   const LeftSwipe = () => {
-    return <EditButton style={{paddingVertical: 50}}/>
+    return <EditButton paddingVert={expanded ? 15: 50}/>
   }
 
   return (

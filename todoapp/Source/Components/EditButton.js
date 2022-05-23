@@ -13,7 +13,7 @@ const EditButton = (props) => {
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 colors={['#11998e', '#38ef7d']}
                 style={EditStyles.EditButton}>
-                <Text style={EditStyles.Text}>✎</Text>
+                <Text style={[EditStyles.Text, {paddingVertical: props.paddingVert}]}>✎</Text>
             </LinearGradient>
         </Pressable>
     )
@@ -28,7 +28,6 @@ const EditStyles = StyleSheet.create({
     EditButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 15,
         paddingHorizontal: 15,
         borderRadius: 15,
         elevation: 3,

@@ -6,13 +6,14 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Pressable, Text } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, StyleSheet, Modal } from 'react-native'
 import NavBar from './Source/Components/NavBar';
 import TodoTask from './Source/Components/TodoTask';
 import AddButton from './Source/Components/AddButton';
 import { exampleData } from './Source/Data'
 import NewToDoTask from './Source/Components/NewToDoTask';
+import { FormatTime } from './Source/ExtensionMethods';
 
 
 const App = () => {
@@ -20,25 +21,23 @@ const App = () => {
 
   const [appExampleData, setAppExampleData] = useState(exampleData)
   const [AddNew, setAddNew] = useState(false)
+  const [getNewTask, setNewTask] = useState({dataId: 0, time: new Date(), description: ''});
+  const [getID, setID] = useState(0)
 
-  const ShowItems = () => {
-    appExampleData.map((todoTask) => {
-      return (
-        <TodoTask
-          key={todoTask.dataId}
-          taskId={todoTask.dataId}
-          taskTime={todoTask.time}
-          taskText={todoTask.description}
-          DeleteFunction={DeleteItem} />
-      )
-    })
+  const newID = () => {
+    setID(prevCount => prevCount + 1)
+    console.log('ID is: ' + getID)
+    return getID
   }
 
   const DeleteItem = (itemId) => {    
     setAppExampleData(appExampleData.filter(task => task.dataId !== itemId))    //deletes the item with that id from the array
-    console.log("should delete")
-    console.log(appExampleData.length)
   }
+
+
+  useEffect(() => {   //adds a new todo to the array of todos
+    setAppExampleData([...appExampleData, {dataId: 22, time: FormatTime(getNewTask.time), description: getNewTask.description}])
+  }, [getNewTask]);
 
   return (
     <View style={styles.container}>
@@ -46,21 +45,23 @@ const App = () => {
       <View style={styles.content}>
         <ScrollView style={styles.scrollView} decelerationRate="fast">
           {/* Where all the todoTasks show up */}
-          {appExampleData.map((todoTask) => {
+          {appExampleData.map((todoTask, index) => {
             return (
               <TodoTask
-                key={todoTask.dataId}
-                taskId={todoTask.dataId}
+                key={index}
+                taskId={index}
                 taskTime={todoTask.time}
-                taskText={todoTask.description}
+                taskText={todoTask.description }
                 DeleteFunction={() => DeleteItem(todoTask.dataId)} />
             )
           })}
 
         </ScrollView>
       </View>
-      <AddButton bottomMargin={8} AddClick={() => setAddNew(true)} />
-      <NewToDoTask trigger={AddNew} setModal={setAddNew}/>
+      <AddButton bottomMargin={8} AddClick={() => {setAddNew(true)}} />
+      <Modal visible={AddNew} transparent={true}>
+        <NewToDoTask setModal={setAddNew} NewTask={setNewTask}/>
+      </Modal>
     </View>
   );
 }
