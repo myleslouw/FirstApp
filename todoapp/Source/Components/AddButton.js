@@ -23,7 +23,6 @@ const ButtonStyle = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 32,
         borderRadius: 40,
-        elevation: 3,
     },
 
     Text: {

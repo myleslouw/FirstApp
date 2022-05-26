@@ -33,4 +33,4 @@ const CancelButtonStyles = StyleSheet.create({
     }
 })
 
-export default CancelButton
+export default CancelButton;

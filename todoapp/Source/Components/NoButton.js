@@ -2,32 +2,33 @@ import React from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 
-const DeleteButton = (props) => {
+const NoButton = (props) => {
 
   return (
-    <Pressable onPress={props.DeleteFunction} style={DeleteStyle.ButtonContainer}>
+    <Pressable onPress={props.NoButtonClicked} style={YesStyles.ButtonContainer}>
             <LinearGradient
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 colors={['#11998e', '#38ef7d']}
-                style={[DeleteStyle.DeleteButton, {paddingVertical: props.paddingVert}]}>
-                <Text style={DeleteStyle.Text}>X</Text>
+                style={YesStyles.NoButton}>
+                <Text style={YesStyles.Text}>No</Text>
             </LinearGradient>
         </Pressable>
   )
 }
 
-const DeleteStyle = StyleSheet.create({
+const YesStyles = StyleSheet.create({
     ButtonContainer: {
+        marginHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
 
-    DeleteButton: {
+    NoButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 15,
-        paddingHorizontal: 15,
-        borderRadius: 15,
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 40,
     },
 
     Text: {
@@ -35,4 +36,4 @@ const DeleteStyle = StyleSheet.create({
     }
 })
 
-export default DeleteButton
+export default NoButton

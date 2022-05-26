@@ -9,8 +9,6 @@ export default function DatePickerComp(props) {
 
     const [getDate, setDate] = useState(new Date())
 
-    let initialDate = new Date();
-
     const closeModal = () => {
         props.showDateTimeModal(false)
     }
@@ -29,16 +27,17 @@ export default function DatePickerComp(props) {
                 style={DatePickerStyle.Outline}>
                 <View style={DatePickerStyle.Background}>
 
-                    <DatePicker 
+                    <DatePicker
+                        mode='datetime'
                         date={getDate}
-                        fadeToColor='black' 
-                        textColor='white' 
+                        fadeToColor='black'
+                        textColor='white'
                         style={DatePickerStyle.DatePicker}
-                        onDateChange={date => setDate(date)} />
+                        onDateChange={setDate} />
 
                     <View style={DatePickerStyle.ButtonContainer}>
-                        <CancelButton CancelButtonClicked={closeModal}/>
-                        <SetButton SetButtonClicked={() => SendDate(getDate)}/>
+                        <CancelButton CancelButtonClicked={closeModal} />
+                        <SetButton SetButtonClicked={() => SendDate(getDate)} />
                     </View>
                 </View>
             </LinearGradient>

@@ -2,13 +2,10 @@ import React from 'react'
 import {  Pressable, StyleSheet, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CompleteButton = () => {
-    function ClickFunc() {
-        console.debug("Complete button Clicked")
-    }
+const CompleteButton = (props) => {
 
     return (
-        <Pressable onPress={ClickFunc}>
+        <Pressable onPress={props.CompleteFunction}>
             <LinearGradient
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 colors={['#11998e', '#38ef7d']}

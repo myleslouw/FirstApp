@@ -5,38 +5,43 @@ import DateButton from './DateButton';
 import AddButton from './AddButton';
 import DatePickerComp from './DatePickerComp';
 import { FormatTime } from '../ExtensionMethods'
+import SlideUpView from './SlideUpView'
+
 
 
 const NewToDoTask = (props) => {
 
     const [showDateTime, setShowDateTime] = useState(false);
     const [getNewTaskTime, setNewTaskTime] = useState(new Date());
-    const [getNewTaskDescription, setNewTaskDescription] = useState("");
+    const [getNewTaskDescription, setNewTaskDescription] = useState("")
+    const [animationState, SetAnimationState] = useState(true)
 
     const closeModal = () => {
         props.setModal(false)
     }
 
 
+
     const SendTaskInfo = () => {
-        props.NewTask({dataId: 12, time: getNewTaskTime, description: getNewTaskDescription})
+        props.NewTask({ dataId: 99, time: getNewTaskTime, description: getNewTaskDescription })
         closeModal();
     }
 
 
     return (
-            <Pressable onPress={closeModal} style={NewStyles.container}>
+        <Pressable onPress={() => SetAnimationState(false)} style={NewStyles.container}>
+            <SlideUpView style={NewStyles.AnimationWindow} Opened={animationState} AfterAnimation={closeModal}>
                 <LinearGradient
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                     colors={['#11998e', '#38ef7d']}
                     style={NewStyles.Outline}>
 
                     <View style={NewStyles.Background}>
-                        
+
                         <Text style={NewStyles.Texts}>Time:</Text>
                         <View style={NewStyles.TimeSection}>
                             <Text style={NewStyles.Texts}>{FormatTime(getNewTaskTime)}</Text>
-                            <DateButton DateButtonClicked={() => setShowDateTime(true)}/>
+                            <DateButton DateButtonClicked={() => setShowDateTime(true)} />
                         </View>
 
                         <Text style={NewStyles.Texts}>Details:</Text>
@@ -47,13 +52,14 @@ const NewToDoTask = (props) => {
                                 multiline={true}
                                 onChangeText={text => setNewTaskDescription(text)}></TextInput>
                         </View>
-                        <AddButton bottomMargin={5} AddClick={()=> SendTaskInfo(getNewTaskTime)}/>
+                        <AddButton bottomMargin={5} AddClick={() => SendTaskInfo()} />
                     </View>
                 </LinearGradient>
                 <Modal visible={showDateTime} transparent={true}>
-                    <DatePickerComp showDateTimeModal={setShowDateTime} TaskDate={setNewTaskTime}/>
+                    <DatePickerComp showDateTimeModal={setShowDateTime} TaskDate={setNewTaskTime} />
                 </Modal>
-            </Pressable>
+            </SlideUpView>
+        </Pressable>
     );
 }
 
@@ -64,9 +70,13 @@ const NewStyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0, 0.5)',
     },
+    AnimationWindow: {
+        width: '100%',
+        height: '50%'
+    },
 
     Outline: {
-        height: '50%',
+        height: '100%',
         width: '100%',
         borderRadius: 20,
         alignItems: "center",

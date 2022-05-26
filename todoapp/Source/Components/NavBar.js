@@ -1,13 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import SortButton from './SortButton'
 
-const NavBar = () => {
+const NavBar = (props) => {
     return (
         <View style={styles.NavBarContainer}>
-            <View style={styles.leftView}>
-                <Text style={styles.navText}>DoYourShit</Text>
-            </View>
-            <View style={styles.rightView}></View>
+            <Text style={styles.navText}>DoYourShit</Text>
+            <SortButton SortButtonClicked={props.SortClicked}/>
         </View>
     )
 }
@@ -16,10 +15,12 @@ const styles = StyleSheet.create({
     NavBarContainer: {
         width: '100%',
         paddingTop: 20,
-        paddingLeft: 15,
-        paddingBottom: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
         display: 'flex',
-        alignItems: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
 
     leftView: {
@@ -28,6 +29,11 @@ const styles = StyleSheet.create({
 
     rightView: {
 
+    },
+
+    Button: {
+        alignItems: 'center',
+        backgroundColor: 'red'
     },
 
     navText: {

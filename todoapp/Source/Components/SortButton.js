@@ -1,30 +1,31 @@
 import React from 'react'
-import {  Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 
-const EditButton = (props) => {
+const DeleteButton = (props) => {
 
-    return (
-        <Pressable onPress={props.EditFunction} style={EditStyles.ButtonContainer} >
+  return (
+    <Pressable onPress={props.SortButtonClicked} style={SortButtonStyle.ButtonContainer}>
             <LinearGradient
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 colors={['#11998e', '#38ef7d']}
-                style={EditStyles.EditButton}>
-                <Text style={[EditStyles.Text, {paddingVertical: props.paddingVert}]}>✎</Text>
+                style={SortButtonStyle.SortButton}>
+                <Text style={SortButtonStyle.Text}>Sort</Text>
             </LinearGradient>
         </Pressable>
-    )
+  )
 }
 
-const EditStyles = StyleSheet.create({
+const SortButtonStyle = StyleSheet.create({
     ButtonContainer: {
-        maxWidth: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    EditButton: {
+
+    SortButton: {
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 15,
         elevation: 3,
@@ -35,4 +36,4 @@ const EditStyles = StyleSheet.create({
     }
 })
 
-export default EditButton
+export default DeleteButton
