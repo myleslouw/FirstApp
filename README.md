@@ -1,6 +1,6 @@
-# FirstApp
+# SimpleToDoApp
 
-Created with React Native
+My first app in React Native
 
 ![](https://github.com/myleslouw/FirstApp/blob/master/TodoAppGIFS/Add.gif)
 ![](https://github.com/myleslouw/FirstApp/blob/master/TodoAppGIFS/Element.gif)
