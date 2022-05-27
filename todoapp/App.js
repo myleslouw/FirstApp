@@ -10,33 +10,38 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, StyleSheet, Modal, StatusBar, Animated } from 'react-native'
 import NavBar from './Source/Components/NavBar';
 import TodoTask from './Source/Components/TodoTask';
-import AddButton from './Source/Components/AddButton';
+import AddButton from './Source/Components/Buttons/AddButton';
 import { exampleData } from './Source/Data'
 import NewToDoTask from './Source/Components/NewToDoTask';
 
 
 const App = () => {
 
-  const AnimationProgress = useRef(new Animated.Value(0)).current
-  const [appExampleData, setAppExampleData] = useState(exampleData)
+  const [todoArray, setTodoArray] = useState(exampleData)
   const [AddNew, setAddNew] = useState(false)
   const [getNewTask, setNewTask] = useState({ dataId: 420, time: new Date(), description: '' });
+  const [getEdittedTask, setEdittedTask] = useState({ dataId: 420, time: new Date(), description: '' });
   const firstRender = useFirstRender();   //used to check for updates after the first render
   let newID = useRef(0)
 
 
   const CompleteTask = (taskId) => {
-    setAppExampleData(appExampleData.filter(task => task.dataId !== taskId))    //deletes the item with that id from the array
+    setTodoArray(todoArray.filter(task => task.dataId !== taskId))    //deletes the item with that id from the array
   }
 
   const DeleteTask = (taskId) => {
     console.log("deleting with ID: " + taskId)
-    setAppExampleData(appExampleData.filter(task => task.dataId !== taskId))
+    setTodoArray(todoArray.filter(task => task.dataId !== taskId))
+  }
+
+  const EditTask = (updatedTask) => {
+    setTodoArray(todoArray.map(task => task.dataId !== updatedTask.dataId ? task : updatedTask))
+    console.log("Editted the task with Id: " + updatedTask.dataId)
   }
 
   const SortList = () => {
-    const sorted = [...appExampleData].sort((date1, date2) => { return date1.time - date2.time })
-    setAppExampleData(sorted);
+    const sorted = [...todoArray].sort((date1, date2) => { return date1.time - date2.time })
+    setTodoArray(sorted);
   }
 
   function useFirstRender() {
@@ -52,19 +57,18 @@ const App = () => {
   useEffect(() => {   //adds a new todo to the array of todos
     if (!firstRender) {
       console.log("newID: " + newID.current)
-      setAppExampleData([...appExampleData, { dataId: newID.current, time: getNewTask.time, description: getNewTask.description }])
+      setTodoArray([...todoArray, { dataId: newID.current, time: getNewTask.time, description: getNewTask.description }])
       newID.current++;
     }
   }, [getNewTask]);
 
-  useEffect(() => {
-    Animated.timing(
-      AnimationProgress, {
-        toValue: 1,
-        duration: 2000
-      }
-    ).start();
-  }, [AnimationProgress])
+  useEffect(() => {   //updates a todo in the array of todos if it gets an updated task
+    if (!firstRender) {
+      //update that task
+      EditTask(getEdittedTask)   //gets the ID and runs the Edit function
+    }
+  }, [getEdittedTask]);
+
 
 
   return (
@@ -74,7 +78,7 @@ const App = () => {
       <View style={styles.content}>
         <ScrollView decelerationRate="fast">
           {/* Where all the todoTasks show up */}
-          {appExampleData.map((todoTask) => {
+          {todoArray.map((todoTask) => {
             return (
               <TodoTask
                 key={todoTask.dataId}
@@ -82,7 +86,8 @@ const App = () => {
                 taskTime={todoTask.time}
                 taskText={todoTask.description}
                 DeleteFunction={() => DeleteTask(todoTask.dataId)}
-                CompleteFunction={() => CompleteTask(todoTask.dataId)} />
+                CompleteFunction={() => CompleteTask(todoTask.dataId)}
+                EditFunction={setEdittedTask} />
             )
           })}
 

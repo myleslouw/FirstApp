@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet, TextInput, Modal, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
-import DateButton from './DateButton';
-import AddButton from './AddButton';
+import DateButton from './Buttons/DateButton';
+import AddButton from './Buttons/AddButton';
 import DatePickerComp from './DatePickerComp';
 import { FormatTime } from '../ExtensionMethods'
-import SlideUpView from './SlideUpView'
+import SlideUpView from './Animations/SlideUpView'
 
 
 
@@ -30,7 +30,11 @@ const NewToDoTask = (props) => {
 
     return (
         <Pressable onPress={() => SetAnimationState(false)} style={NewStyles.container}>
-            <SlideUpView style={NewStyles.AnimationWindow} Opened={animationState} AfterAnimation={closeModal}>
+            <SlideUpView 
+                style={NewStyles.AnimationWindow} 
+                Opened={animationState} 
+                AfterAnimation={closeModal}>
+                    
                 <LinearGradient
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                     colors={['#11998e', '#38ef7d']}

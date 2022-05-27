@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import SortButton from './SortButton'
+import { View, Text, StyleSheet } from 'react-native'
+import SortButton from './Buttons/SortButton'
 
 const NavBar = (props) => {
     return (
         <View style={styles.NavBarContainer}>
-            <Text style={styles.navText}>DoYourShit</Text>
+            <Text style={styles.navText}>DoYourStuff</Text>
             <SortButton SortButtonClicked={props.SortClicked}/>
         </View>
     )

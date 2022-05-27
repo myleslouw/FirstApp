@@ -2,8 +2,8 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import DatePicker from 'react-native-date-picker'
-import SetButton from './SetButton'
-import CancelButton from './CancelButton'
+import SetButton from './Buttons/SetButton'
+import CancelButton from './Buttons/CancelButton'
 
 export default function DatePickerComp(props) {
 

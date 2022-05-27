@@ -1,30 +1,39 @@
 import { Text, View, StyleSheet, TextInput, Modal, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
-import YesButton from './YesButton';
-import NoButton from './NoButton';
+import YesButton from './Buttons/YesButton';
+import NoButton from './Buttons/NoButton';
+import FadeInView from './Animations/FadeInView';
 
 
 const AreYouSure = (props) => {
+
+    const [animationState, SetAnimationState] = useState(true)
 
     const closeModal = () => {
         props.ShowWarning(false)
     }
 
     return (
-        <Pressable onPress={closeModal} style={AYSStyles.container}>
-            <LinearGradient
-                start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-                colors={['#11998e', '#38ef7d']}
-                style={AYSStyles.Outline}>
-                <View style={AYSStyles.Background}>
-                    <Text style={AYSStyles.Texts}>Are you sure you would like to delete the task? This cannot be undone</Text>
-                    <View style={AYSStyles.ButtonContainer}>
-                        <NoButton NoButtonClicked={closeModal}/>
-                        <YesButton YesButtonClick={props.YesButtonClicked}/>
+        <Pressable onPress={() => SetAnimationState(false)} style={AYSStyles.container}>
+            <FadeInView 
+                style={AYSStyles.AnimationWindow}
+                Opened={animationState}
+                AfterAnimation={closeModal}>
+
+                <LinearGradient
+                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                    colors={['#11998e', '#38ef7d']}
+                    style={AYSStyles.Outline}>
+                    <View style={AYSStyles.Background}>
+                        <Text style={AYSStyles.Texts}>Are you sure you would like to delete the task? This cannot be undone</Text>
+                        <View style={AYSStyles.ButtonContainer}>
+                            <NoButton NoButtonClicked={closeModal} />
+                            <YesButton YesButtonClick={props.YesButtonClicked} />
+                        </View>
                     </View>
-                </View>
-            </LinearGradient>
+                </LinearGradient>
+            </FadeInView>
         </Pressable>
     );
 }
@@ -35,6 +44,13 @@ const AYSStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0, 0.5)',
+    },
+
+    AnimationWindow: {
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     Outline: {
